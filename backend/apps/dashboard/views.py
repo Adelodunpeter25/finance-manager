@@ -1,59 +1,57 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.db.models import Sum
+from django.db.models import Sum, Prefetch
+from django.core.cache import cache
 from tracker.models import Transaction, Budget
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def dashboard_stats(request):
     user = request.user
+    cache_key = f"dashboard_stats_{user.id}"
     
-    # Calculate totals
-    total_income = Transaction.objects.filter(
-        user=user, 
-        type='income'
-    ).aggregate(Sum('amount'))['amount__sum'] or 0
+    # Try to get from cache first
+    cached_data = cache.get(cache_key)
+    if cached_data:
+        return Response(cached_data)
     
-    total_expenses = Transaction.objects.filter(
-        user=user, 
-        type='expense'
-    ).aggregate(Sum('amount'))['amount__sum'] or 0
+    # Calculate totals with single query
+    income_sum = Transaction.objects.filter(user=user, type='income').aggregate(Sum('amount'))['amount__sum'] or 0
+    expense_sum = Transaction.objects.filter(user=user, type='expense').aggregate(Sum('amount'))['amount__sum'] or 0
     
-    net_balance = total_income - total_expenses
+    net_balance = income_sum - expense_sum
     
     # Calculate budget utilization
-    budgets = Budget.objects.filter(user=user)
-    total_budget = budgets.aggregate(Sum('amount'))['amount__sum'] or 0
+    total_budget = Budget.objects.filter(user=user).aggregate(Sum('amount'))['amount__sum'] or 0
+    budget_utilization = round((float(expense_sum) / float(total_budget)) * 100, 1) if total_budget > 0 else 0
     
-    budget_utilization = 0
-    if total_budget > 0:
-        budget_utilization = round((float(total_expenses) / float(total_budget)) * 100, 1)
-    
-    return Response({
-        'totalIncome': float(total_income),
-        'totalExpenses': float(total_expenses),
+    data = {
+        'totalIncome': float(income_sum),
+        'totalExpenses': float(expense_sum),
         'netBalance': float(net_balance),
         'budgetUtilization': budget_utilization
-    })
+    }
+    
+    # Cache for 5 minutes
+    cache.set(cache_key, data, 300)
+    return Response(data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def recent_transactions(request):
     user = request.user
     
-    transactions = Transaction.objects.filter(user=user).order_by('-date')[:5]
+    transactions = Transaction.objects.filter(user=user).select_related('category').order_by('-date')[:5]
     
-    data = []
-    for transaction in transactions:
-        data.append({
-            'id': transaction.id,
-            'amount': float(transaction.amount),
-            'type': transaction.type,
-            'category': transaction.category.name if transaction.category else 'Uncategorized',
-            'date': transaction.date.strftime('%Y-%m-%d'),
-            'description': transaction.description
-        })
+    data = [{
+        'id': t.id,
+        'amount': float(t.amount),
+        'type': t.type,
+        'category': t.category.name if t.category else 'Uncategorized',
+        'date': t.date.strftime('%Y-%m-%d'),
+        'description': t.description
+    } for t in transactions]
     
     return Response(data)
 

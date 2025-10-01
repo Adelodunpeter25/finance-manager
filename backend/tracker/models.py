@@ -16,6 +16,7 @@ class Category(models.Model):
         unique_together = ['name', 'user']
         indexes = [
             models.Index(fields=['user', 'type']),
+            models.Index(fields=['user', 'name']),
         ]
         
     def __str__(self):
@@ -42,6 +43,8 @@ class Transaction(models.Model):
             models.Index(fields=['user', 'date']),
             models.Index(fields=['user', 'type']),
             models.Index(fields=['user', 'category']),
+            models.Index(fields=['user', 'type', 'date']),  # Composite for dashboard queries
+            models.Index(fields=['date', 'user']),  # For date range queries
         ]
         
     def __str__(self):

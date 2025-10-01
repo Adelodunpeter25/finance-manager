@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { dashboardService } from '../services/dashboardService';
 import type { DashboardStats, RecentTransaction, BudgetStatus } from '../types/dashboard';
 
-const Dashboard: React.FC = () => {
+const Dashboard: React.FC = React.memo(() => {
   const { user } = useAuth();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [recentTransactions, setRecentTransactions] = useState<RecentTransaction[]>([]);
@@ -146,6 +146,7 @@ const Dashboard: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
+Dashboard.displayName = 'Dashboard';
 export default Dashboard;
