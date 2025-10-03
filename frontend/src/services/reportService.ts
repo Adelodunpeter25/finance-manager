@@ -7,7 +7,7 @@ export const reportService = {
     if (startDate) params.append('start_date', startDate);
     if (endDate) params.append('end_date', endDate);
     
-    const response = await api.get<ReportData>(`/reports/?${params.toString()}`);
+    const response = await api.get<ReportData>(`/reports/data/?${params.toString()}`);
     return response.data;
   },
 

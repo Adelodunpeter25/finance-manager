@@ -33,11 +33,14 @@ api.interceptors.response.use(
       details: (error.response?.data as any)?.details,
     };
     
-    // Handle 401 unauthorized
+    // Handle 401 unauthorized - only redirect if not on login/register pages
     if (error.response?.status === 401) {
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-      window.location.href = '/login';
+      const currentPath = window.location.pathname;
+      if (currentPath !== '/login' && currentPath !== '/register') {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        window.location.href = '/login';
+      }
     }
     
     return Promise.reject(apiError);

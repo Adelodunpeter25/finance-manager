@@ -85,7 +85,7 @@ const Categories: React.FC = () => {
           <h1 className="text-2xl font-bold text-gray-900">Categories</h1>
           <button 
             onClick={() => setShowForm(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all"
           >
             Add Category
           </button>
@@ -231,7 +231,7 @@ const Categories: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all"
                 >
                   {editingCategory ? 'Update' : 'Create'}
                 </button>

@@ -19,10 +19,11 @@ const Transactions: React.FC = () => {
       setLoading(true);
       setError(null);
       const response = await transactionService.getTransactions(filters);
-      setTransactions(response.results);
+      setTransactions(Array.isArray(response) ? response : []);
     } catch (err) {
       setError('Failed to load transactions');
       console.error('Transactions error:', err);
+      setTransactions([]);
     } finally {
       setLoading(false);
     }
@@ -66,7 +67,7 @@ const Transactions: React.FC = () => {
           <h1 className="text-2xl font-bold text-gray-900">Transactions</h1>
           <button 
             onClick={() => setShowForm(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all"
           >
             Add Transaction
           </button>

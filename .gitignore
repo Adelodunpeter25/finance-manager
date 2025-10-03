@@ -1,31 +1,26 @@
-backend/venv
-backend/.env
-frontend/node_modules
-frontend/dist
-
 # Python
-*/__pycache__/
+__pycache__/
 *.py[cod]
-backend/tracker/__pycache__
 *.pyo
 *.pyd
-backend/finance_app/__pycache__
-backend/accounts/__pycache__
-backend/finance_app/__pycache__
-backend-old.md
-backend.md
-frontend.md
 .Python
 *.so
 .pytest_cache/
-backend/accounts/__pycache__
-backend/accounts/migrations/__pycache__
-backend/tracker/migrations/__pycache__
-backend/tracker/__pycache__
-# Django
-*.log
-db.sqlite3
-media/
+
+# Virtual Environments
+backend/venv/
+venv/
+env/
+
+# Environment Variables
+backend/.env
+.env
+
+
+# Node
+frontend/node_modules/
+frontend/dist/
+node_modules/
 
 # IDE
 .vscode/
@@ -36,5 +31,7 @@ media/
 # OS
 .DS_Store
 Thumbs.db
-backend/tracker/migrations
-backend/apps/budgets/__pycache__
+
+# Documentation
+backend.md
+frontend.md

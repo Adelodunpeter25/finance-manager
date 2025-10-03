@@ -41,6 +41,11 @@ export const authService = {
     return response.data;
   },
 
+  async updateProfile(data: Partial<User>): Promise<User> {
+    const response = await api.put<User>('/auth/user/', data);
+    return response.data;
+  },
+
   async refreshToken(): Promise<string> {
     const refreshToken = localStorage.getItem('refresh_token');
     if (!refreshToken) {

@@ -1,36 +1,27 @@
 # Finance Manager
 
-A full-stack personal finance management application built with Django REST Framework and React TypeScript.
+A modern full-stack personal finance management application that helps users track income, expenses, budgets, and financial goals. 
+Perfect for individuals looking to gain control over their finances with an intuitive, feature-rich platform.
+Built with FastAPI and React.
 
 ## 🚀 Features
 
-### ✅ Completed Features
-- **User Authentication** - Secure login/register with JWT tokens
-- **Dashboard** - Financial overview with summary cards and recent activity
-- **Transaction Management** - Full CRUD operations for income/expense tracking
+- **User Authentication** - Secure JWT-based authentication system
+- **Dashboard** - Real-time financial overview with summary cards and recent activity
+- **Transaction Management** - Full CRUD operations for income/expense tracking with advanced filtering
 - **Category Management** - Organize transactions by custom categories
-- **Budget Management** - Set and track budgets with visual progress indicators
-- **Reports & Analytics** - Interactive charts and data visualization
-- **Responsive Design** - Works on desktop, tablet, and mobile devices
-- **Real-time Data** - All data fetched from backend APIs
-- **CSV Export** - Export transaction data for external analysis
-
-### 🎨 UI/UX Features
-- **Modern Design** - Clean, professional interface with Tailwind CSS
-- **Interactive Charts** - Pie charts, bar charts, and line graphs using Recharts
-- **Toast Notifications** - User feedback for all actions
-- **Loading States** - Proper loading indicators throughout the app
-- **Error Handling** - Comprehensive error boundaries and user-friendly messages
-- **Responsive Navigation** - Mobile-friendly navigation with dropdown menus
+- **Budget Tracking** - Set and monitor budgets with visual progress indicators
+- **Reports & Analytics** - Interactive charts and data visualization with CSV export
+- **Responsive Design** - Mobile-first design that works seamlessly across all devices
 
 ## 🛠 Tech Stack
 
 **Backend:**
-- Django 5.2.6
-- Django REST Framework
-- PostgreSQL
-- Python 3.x
+- FastAPI (Async Python web framework)
+- SQLAlchemy (Async ORM)
+- PostgreSQL (Database)
 - JWT Authentication
+- Pydantic (Data validation)
 
 **Frontend:**
 - React 19.1.1
@@ -39,149 +30,154 @@ A full-stack personal finance management application built with Django REST Fram
 - Tailwind CSS
 - React Router
 - Axios
-- Recharts (for data visualization)
+- Recharts (Data visualization)
 
 ## 📁 Project Structure
 
 ```
 finance-manager/
 ├── backend/
-│   ├── finance_app/          # Django project settings
-│   ├── accounts/             # User authentication
-│   ├── tracker/              # Core models (Transaction, Category, Budget)
-│   └── apps/
-│       ├── dashboard/        # Dashboard API endpoints
-│       ├── transactions/     # Transaction CRUD APIs
-│       ├── categories/       # Category management APIs
-│       ├── budgets/          # Budget management APIs
-│       └── reports/          # Analytics and export APIs
+│   ├── main.py                    # FastAPI app with all routers
+│   ├── requirements.txt
+│   ├── Dockerfile
+│   └── app/
+│       ├── core/                  # Config & security
+│       ├── db/                    # Database session
+│       ├── models/                # SQLAlchemy models
+│       ├── schemas/               # Pydantic schemas
+│       └── api/endpoints/         # API endpoints
 └── frontend/
-    ├── src/
-    │   ├── components/       # Reusable UI components
-    │   ├── pages/           # Page-level components
-    │   ├── services/        # API service functions
-    │   ├── types/           # TypeScript interfaces
-    │   ├── context/         # React context providers
-    │   └── utils/           # Helper functions
-    └── public/
+    └── src/
+        ├── components/            # Reusable UI components
+        ├── pages/                 # Page-level components
+        ├── services/              # API service layer
+        ├── types/                 # TypeScript interfaces
+        ├── context/               # React context providers
+        └── utils/                 # Helper functions
 ```
 
-## 🚀 Setup Instructions
+## 🚀 Quick Start
 
 ### Backend Setup
 
-1. **Navigate to backend directory:**
-   ```bash
-   cd backend
-   ```
+```bash
+cd backend
 
-2. **Create and activate virtual environment:**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+# Install dependencies
+pip install -r requirements.txt
 
-4. **Configure environment variables:**
-   - Copy `.env.example` to `.env`
-   - Update database credentials and secret key
+# Configure .env file with your database credentials
 
-5. **Run migrations:**
-   ```bash
-   python manage.py migrate
-   ```
-
-6. **Create superuser (optional):**
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-7. **Start Django server:**
-   ```bash
-   python manage.py runserver
-   ```
+# Start server
+uvicorn main:app --reload --port 8000
+```
 
 ### Frontend Setup
 
-1. **Navigate to frontend directory:**
-   ```bash
-   cd frontend
-   ```
+```bash
+cd frontend
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+# Install dependencies
+npm install
 
-3. **Start development server:**
-   ```bash
-   npm run dev
-   ```
+# Start development server
+npm run dev
+```
 
 ## 🌐 Application URLs
 
 - **Backend API:** http://localhost:8000
+- **API Documentation:** http://localhost:8000/docs
 - **Frontend:** http://localhost:5173
-- **Django Admin:** http://localhost:8000/admin
 
-## 🎯 Key Features Explained
+## 🎯 Key Features
 
 ### Dashboard
-- **Financial Overview:** Total income, expenses, and net balance
-- **Recent Activity:** Last 5 transactions with details
-- **Budget Progress:** Visual progress bars for active budgets
-- **Real-time Updates:** All data calculated from actual transactions
+- Real-time financial overview with total income, expenses, and net balance
+- Recent transaction history
+- Budget progress visualization with color-coded indicators
+- Responsive card-based layout
 
 ### Transaction Management
-- **Full CRUD Operations:** Create, read, update, delete transactions
-- **Advanced Filtering:** Filter by type, category, date range, and search
-- **Category Integration:** Link transactions to income/expense categories
-- **Responsive Table:** Professional table design with action buttons
+- Complete CRUD operations
+- Advanced filtering by type, category, date range, and search
+- Category integration for better organization
+- Sortable and searchable transaction table
 
 ### Budget Tracking
-- **Visual Progress:** Color-coded progress bars (green/yellow/red)
-- **Real-time Calculations:** Spent amounts calculated from transactions
-- **Flexible Periods:** Support for weekly, monthly, and yearly budgets
-- **Category-based:** Budgets linked to specific expense categories
+- Visual progress bars with color coding (green/yellow/red)
+- Real-time spent amount calculations
+- Category-based budget allocation
+- Period-based tracking (weekly, monthly, yearly)
 
 ### Analytics & Reports
-- **Interactive Charts:** Pie charts, bar charts, and line graphs
-- **Category Breakdown:** Visual representation of spending by category
-- **Monthly Trends:** Historical view of income vs expenses
-- **CSV Export:** Download transaction data for external analysis
+- Interactive pie charts for category breakdown
+- Bar charts for monthly trends
+- Line graphs for income vs expenses
+- CSV export for external analysis
 
 ## 🔒 Security Features
 
-- **JWT Authentication:** Secure token-based authentication
-- **User Isolation:** All data filtered by authenticated user
-- **Input Validation:** Comprehensive validation on both frontend and backend
-- **Error Handling:** Secure error messages without sensitive information
-- **CORS Configuration:** Proper cross-origin resource sharing setup
+- JWT token-based authentication
+- Password hashing with bcrypt
+- User data isolation at database level
+- Input validation with Pydantic
+- CORS configuration for secure cross-origin requests
+- SQL injection protection via SQLAlchemy ORM
 
 ## 📱 Responsive Design
 
-- **Mobile-First:** Designed for mobile devices first
-- **Responsive Navigation:** Collapsible menu for mobile devices
-- **Flexible Layouts:** Grid and flexbox layouts that adapt to screen size
-- **Touch-Friendly:** Buttons and interactive elements sized for touch
+- Mobile-first approach
+- Responsive navigation with collapsible menu
+- Flexible grid and flexbox layouts
+- Touch-friendly interactive elements
+- Optimized for all screen sizes
 
-## 🚧 Future Enhancements
+## 🚀 Performance Optimizations
 
-- **Recurring Transactions:** Automatic transaction creation
-- **Multi-Currency Support:** Handle different currencies
-- **Bank Integration:** Connect to bank accounts for automatic import
-- **Advanced Analytics:** More detailed financial insights
-- **Notifications:** Email/SMS alerts for budget limits
-- **Data Backup:** Cloud backup and restore functionality
+- Async/await throughout the backend
+- Database indexing on frequently queried fields
+- React lazy loading for code splitting
+- Optimized SQL queries with proper joins
+- Frontend caching strategies
 
-## 👨‍💻 Developer Information
+## 🐳 Docker Support
 
-**Developer:** adelodunpeter69@gmail.com  
-**Phone:** 07039201122
+Both backend and frontend include Dockerfiles for containerized deployment.
+
+```bash
+# Build and run with Docker
+docker build -t finance-manager-api ./backend
+docker run -p 8000:8000 finance-manager-api
+```
+
+## 🧪 Testing
+
+The application includes comprehensive error handling and validation:
+- Frontend error boundaries
+- Backend exception handling
+- Input validation on both layers
+- User-friendly error messages
+
+## 📈 Future Enhancements
+
+- Recurring transactions
+- Multi-currency support
+- Bank account integration
+- Advanced analytics with ML insights
+- Email/SMS notifications
+- Mobile app
+- Data backup and restore
+
+## 👨‍💻 Developer
+
+**Peter Adelodun**  
+Email: adelodunpeter69@gmail.com  
+Phone: 07039201122
 
 ## 📄 License
 
@@ -189,4 +185,4 @@ This project is licensed under the MIT License.
 
 ---
 
-**Built with ❤️ using Django REST Framework and React TypeScript**
+**Built with ❤️ using FastAPI and React**

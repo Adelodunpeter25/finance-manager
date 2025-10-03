@@ -116,7 +116,7 @@ const Budgets: React.FC = () => {
           <h1 className="text-2xl font-bold text-gray-900">Budgets</h1>
           <button 
             onClick={() => setShowForm(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all"
           >
             Add Budget
           </button>
@@ -184,7 +184,7 @@ const Budgets: React.FC = () => {
             <p className="text-gray-500">No budgets created yet</p>
             <button 
               onClick={() => setShowForm(true)}
-              className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+              className="mt-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all"
             >
               Create Your First Budget
             </button>
@@ -303,7 +303,7 @@ const Budgets: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all"
                 >
                   {editingBudget ? 'Update' : 'Create'}
                 </button>

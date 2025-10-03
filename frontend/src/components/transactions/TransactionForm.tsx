@@ -173,7 +173,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ isOpen, onClose, onSu
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50"
             >
               {loading ? 'Creating...' : 'Create Transaction'}
             </button>

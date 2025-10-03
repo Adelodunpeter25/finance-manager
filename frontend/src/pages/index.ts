@@ -6,3 +6,4 @@ export { default as Transactions } from './Transactions';
 export { default as Budgets } from './Budgets';
 export { default as Reports } from './Reports';
 export { default as Categories } from './Categories';
+export { default as Profile } from './Profile';

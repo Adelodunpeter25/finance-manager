@@ -4,6 +4,9 @@ export interface User {
   email: string;
   first_name: string;
   last_name: string;
+  currency?: string;
+  timezone?: string;
+  created_at?: string;
 }
 
 export interface LoginRequest {

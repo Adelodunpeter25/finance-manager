@@ -456,7 +456,7 @@ const Landing: React.FC = () => {
               <h3 className="text-xl font-bold">Finance Manager</h3>
             </div>
             <p className="text-gray-400 mb-6">
-              Built with ❤️ using Django REST Framework and React
+              Built with ❤️ using FastAPI and React
             </p>
             <div className="border-t border-gray-800 pt-6">
               <p className="text-gray-500 text-sm">

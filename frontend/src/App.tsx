@@ -17,6 +17,7 @@ const Transactions = lazy(() => import('./pages/Transactions'));
 const Budgets = lazy(() => import('./pages/Budgets'));
 const Reports = lazy(() => import('./pages/Reports'));
 const Categories = lazy(() => import('./pages/Categories'));
+const Profile = lazy(() => import('./pages/Profile'));
 
 const LoadingSpinner = () => (
   <div className="flex justify-center items-center h-64">
@@ -82,6 +83,13 @@ function App() {
                     <ProtectedRoute>
                       <DashboardLayout>
                         <Reports />
+                      </DashboardLayout>
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/profile" element={
+                    <ProtectedRoute>
+                      <DashboardLayout>
+                        <Profile />
                       </DashboardLayout>
                     </ProtectedRoute>
                   } />
