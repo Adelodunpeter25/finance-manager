@@ -17,12 +17,12 @@ const FaqSection: React.FC = () => {
       answer: "Absolutely! You can export all your transaction data to CSV format anytime for backup or analysis in other tools."
     },
     {
-      question: "Is Finance Manager really free?",
-      answer: "Yes, Finance Manager is completely free to use with all core features included. No hidden fees or premium subscriptions required."
+      question: "Is Budgetli really free?",
+      answer: "Yes, Budgetli is completely free to use with all core features included. No hidden fees or premium subscriptions required."
     },
     {
       question: "Can I use it on my phone?",
-      answer: "Yes! Finance Manager works perfectly on all devices - desktop, tablet, and mobile. Access your finances anywhere, anytime."
+      answer: "Yes! Budgetli works perfectly on all devices - desktop, tablet, and mobile. Access your finances anywhere, anytime."
     },
     {
       question: "How do budgets work?",
@@ -39,7 +39,7 @@ const FaqSection: React.FC = () => {
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Questions</span>
           </h2>
           <p className="text-xl text-gray-600">
-            Everything you need to know about Finance Manager
+            Everything you need to know about Budgetli
           </p>
         </div>
 
@@ -84,7 +84,7 @@ const FeaturesCarousel: React.FC = () => {
       icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
       gradient: "from-blue-500 to-blue-600",
       title: "Smart Tracking",
-      description: "Effortlessly track every dollar with intelligent categorization and real-time insights into your spending patterns."
+      description: "Get a quick summary of all your expenses per day, everyday. Effortlessly track every dollar with intelligent categorization and real-time insights."
     },
     {
       icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1",
@@ -96,19 +96,19 @@ const FeaturesCarousel: React.FC = () => {
       icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
       gradient: "from-purple-500 to-purple-600",
       title: "Rich Analytics",
-      description: "Discover spending trends and financial insights with interactive charts and detailed reports."
+      description: "Get important information such as recent transactions, and add new records by a single tap of a button. Discover spending trends with interactive charts."
+    },
+    {
+      icon: "M13 10V3L4 14h7v7l9-11h-7z",
+      gradient: "from-yellow-500 to-yellow-600",
+      title: "Expert Guidance",
+      description: "Maximize your finances even without having an accountant or any accounting knowledge. Get professional-level insights automatically."
     },
     {
       icon: "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4",
       gradient: "from-orange-500 to-orange-600",
       title: "Export Data",
       description: "Export your financial data anytime with CSV downloads for backup or external analysis."
-    },
-    {
-      icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z",
-      gradient: "from-pink-500 to-pink-600",
-      title: "Mobile Ready",
-      description: "Access your finances anywhere with a fully responsive design that works perfectly on all devices."
     },
     {
       icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
@@ -248,10 +248,10 @@ const Landing: React.FC = () => {
             <div className="flex items-center">
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">FM</span>
+                  <span className="text-white font-bold text-sm">B</span>
                 </div>
                 <h1 className="text-xl font-bold text-black">
-                  Finance Manager
+                  Budgetli
                 </h1>
               </div>
             </div>
@@ -294,10 +294,10 @@ const Landing: React.FC = () => {
             <div className="flex items-center justify-between p-6 border-b">
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">FM</span>
+                  <span className="text-white font-bold text-sm">B</span>
                 </div>
                 <h1 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  Finance Manager
+                  Budgetli
                 </h1>
               </div>
               <button
@@ -413,16 +413,16 @@ const Landing: React.FC = () => {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">FM</span>
+                <span className="text-white font-bold text-sm">B</span>
               </div>
-              <h3 className="text-xl font-bold">Finance Manager</h3>
+              <h3 className="text-xl font-bold">Budgetli</h3>
             </div>
             <p className="text-gray-400 mb-6">
               Built with ❤️ using React and TypeScript
             </p>
             <div className="border-t border-gray-800 pt-6">
               <p className="text-gray-500 text-sm">
-                © 2025 Finance Manager. All rights reserved.
+                © 2025 Budgetli. All rights reserved.
               </p>
             </div>
           </div>
