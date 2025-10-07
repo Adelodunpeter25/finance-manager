@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 
 const FaqSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -135,26 +133,30 @@ const FeaturesCarousel: React.FC = () => {
   const totalSlides = features.length;
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % totalSlides);
+    setCurrentIndex((prev) => {
+      const next = prev + 1;
+      if (next >= totalSlides) {
+        setTimeout(() => setCurrentIndex(0), 500);
+        return next;
+      }
+      return next;
+    });
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+    setCurrentIndex((prev) => {
+      if (prev === 0) {
+        setTimeout(() => setCurrentIndex(totalSlides - 1), 500);
+        return -1;
+      }
+      return prev - 1;
+    });
   };
 
   useEffect(() => {
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
-  }, [totalSlides]);
-
-  const getVisibleCards = () => {
-    const cards = [];
-    for (let i = 0; i < cardsPerView; i++) {
-      const index = (currentIndex + i) % features.length;
-      cards.push(features[index]);
-    }
-    return cards;
-  };
+  }, [totalSlides, cardsPerView]);
 
   return (
     <div className="py-24 bg-gray-50">
@@ -171,16 +173,25 @@ const FeaturesCarousel: React.FC = () => {
 
         <div className="relative">
           <div className="overflow-hidden py-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto transition-all duration-500 ease-in-out">
-              {getVisibleCards().map((feature, index) => (
-                <div key={`${currentIndex}-${index}`} className="bg-white p-8 rounded-2xl shadow-lg h-96 flex flex-col hover:shadow-md hover:scale-105 transition-all duration-700 ease-out">
-                  <div className={`w-16 h-16 bg-gradient-to-r ${feature.gradient} rounded-2xl flex items-center justify-center mb-6`}>
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={feature.icon} />
-                    </svg>
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * (100 / cardsPerView)}%)` }}
+            >
+              {[...features, ...features].map((feature, index) => (
+                <div 
+                  key={index}
+                  className="flex-shrink-0 px-4"
+                  style={{ width: `${100 / cardsPerView}%` }}
+                >
+                  <div className="bg-white p-8 rounded-2xl shadow-lg h-96 flex flex-col transition-all duration-500 ease-out group cursor-pointer hover:shadow-2xl hover:scale-105 hover:-translate-y-2">
+                    <div className={`w-16 h-16 bg-gradient-to-r ${feature.gradient} rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-3`}>
+                      <svg className="w-8 h-8 text-white transition-all duration-500 ease-out group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={feature.icon} />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4 transition-all duration-500 ease-out group-hover:text-blue-600">{feature.title}</h3>
+                    <p className="text-gray-600 leading-relaxed flex-1 transition-all duration-500 ease-out group-hover:text-gray-700">{feature.description}</p>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed flex-1">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -226,7 +237,6 @@ const FeaturesCarousel: React.FC = () => {
 };
 
 const Landing: React.FC = () => {
-  const { isAuthenticated } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -248,29 +258,12 @@ const Landing: React.FC = () => {
             
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-4">
-              {isAuthenticated ? (
-                <Link
-                  to="/dashboard"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-                >
-                  Dashboard
-                </Link>
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    className="text-gray-700 hover:text-blue-600 px-4 py-2 rounded-full text-sm font-medium transition-colors"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-                  >
-                    Get Started
-                  </Link>
-                </>
-              )}
+              <button className="text-gray-700 hover:text-blue-600 px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                Sign In
+              </button>
+              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                Get Started
+              </button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -318,32 +311,14 @@ const Landing: React.FC = () => {
             </div>
             
             <div className="p-6">
-              {isAuthenticated ? (
-                <Link
-                  to="/dashboard"
-                  className="block w-full text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full font-medium"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Dashboard
-                </Link>
-              ) : (
-                <div className="space-y-4">
-                  <Link
-                    to="/login"
-                    className="block w-full text-center text-gray-700 px-6 py-3 border border-gray-300 rounded-full font-medium hover:bg-gray-50"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="block w-full text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full font-medium"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Get Started
-                  </Link>
-                </div>
-              )}
+              <div className="space-y-4">
+                <button className="block w-full text-center text-gray-700 px-6 py-3 border border-gray-300 rounded-full font-medium hover:bg-gray-50">
+                  Sign In
+                </button>
+                <button className="block w-full text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full font-medium">
+                  Get Started
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -371,25 +346,17 @@ const Landing: React.FC = () => {
               expense tracking, and intelligent insights that help you make smarter money decisions.
             </p>
             
-            {!isAuthenticated && (
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link
-                  to="/register"
-                  className="bg-white text-blue-600 px-10 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2"
-                >
-                  <span>Start Free Today</span>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </Link>
-                <Link
-                  to="/login"
-                  className="border-2 border-white text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300"
-                >
-                  Sign In
-                </Link>
-              </div>
-            )}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <button className="bg-white text-blue-600 px-10 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
+                <span>Start Free Today</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </button>
+              <button className="border-2 border-white text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300">
+                Sign In
+              </button>
+            </div>
 
             <div className="mt-16 flex justify-center items-center space-x-8 text-sm text-blue-200">
               <div className="flex items-center space-x-2">
@@ -422,28 +389,23 @@ const Landing: React.FC = () => {
       <FaqSection />
 
       {/* CTA Section */}
-      {!isAuthenticated && (
-        <div className="bg-gradient-to-r from-blue-800 via-purple-800 to-pink-800 py-20">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Ready to Transform Your Finances?
-            </h2>
-            <p className="text-xl text-blue-100 mb-10 leading-relaxed">
-              Join thousands of users who have taken control of their financial future. 
-              Start your journey today - it's completely free!
-            </p>
-            <Link
-              to="/register"
-              className="inline-flex items-center bg-white text-blue-600 px-10 py-4 rounded-full text-lg font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 space-x-3"
-            >
-              <span>Get Started Now</span>
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </Link>
-          </div>
+      <div className="bg-gradient-to-r from-blue-800 via-purple-800 to-pink-800 py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Ready to Transform Your Finances?
+          </h2>
+          <p className="text-xl text-blue-100 mb-10 leading-relaxed">
+            Join thousands of users who have taken control of their financial future. 
+            Start your journey today - it's completely free!
+          </p>
+          <button className="inline-flex items-center bg-white text-blue-600 px-10 py-4 rounded-full text-lg font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 space-x-3">
+            <span>Get Started Now</span>
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
         </div>
-      )}
+      </div>
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
@@ -456,7 +418,7 @@ const Landing: React.FC = () => {
               <h3 className="text-xl font-bold">Finance Manager</h3>
             </div>
             <p className="text-gray-400 mb-6">
-              Built with ❤️ using FastAPI and React
+              Built with ❤️ using React and TypeScript
             </p>
             <div className="border-t border-gray-800 pt-6">
               <p className="text-gray-500 text-sm">

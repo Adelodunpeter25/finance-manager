@@ -7,13 +7,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8001',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
   },
   resolve: {
     alias: {
@@ -26,7 +19,6 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
-          charts: ['recharts'],
         },
       },
     },
